@@ -1,0 +1,27 @@
+//abstract
+@import "./abstracts/variables";
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+//formulaire customer
+@import "./components/formEdit";
+
+//customer
+@import "./customer/customer";
+
+//organization
+@import "./organization/organization";
+
+
+//profil
+@import "./profil/profilEditCard";
+
+//theme
+@import "./themes/base.scss";
+
+//users
+@import "./users/user";
+
+//welcome
+@import "./welcome/card";

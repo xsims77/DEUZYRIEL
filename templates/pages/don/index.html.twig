@@ -1,0 +1,45 @@
+{% extends "themes/base_homepage.html.twig" %}
+
+{% block title %} Les dons des donateurs {% endblock %}
+
+{% block description %} Afficher tout les dons des donateurs {% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-5 " data-aos="zoom-in-down">Tout les dons des donateurs</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <div class="container-fluid d-flex flex-column align-items-center">
+        {% for don in dons %}
+        <div class="cardDon mt-5 mb-5">
+            <div class="content">
+                    <p class="heading">Donateur: 
+                    {% if don.moralCustomer == null %}
+                    {{don.physicalCustomer.firstName}} {{don.physicalCustomer.lastName}}
+                    {% elseif don.physicalCustomer == null %}
+                        {{don.moralCustomer.companyName}}
+                    {% endif %}                  
+                    </p>
+                    <ul class="para list-unstyled">
+                        <li>Nom du Projet : {{don.project.projectName}}</li>
+                        <li>Montant {{don.donationAmount}}</li>
+                        <li>Device en {{don.donationCurrency}}</li>
+                        <li>Ajouté le {{don.createdAt|date('d-m-Y')}}</li>
+                        <li>Modifié le {{don.updatedAt|date('d-m-Y')}}</li>
+                    </ul>
+                    <a href="{{path('don.edit',{'id':don.id})}}" class="btnDon mb-3">Modification du don</a>
+                    <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer ce don ?') && document.querySelector('#don_delete_form_{{don.id}}').submit()" href="#" class="btnDon">Supprimer le Don</a>
+                    <form method="POST" id="don_delete_form_{{don.id}}" action="{{path('don.delete',{'id':don.id})}}">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token('don_delete_'~don.id)}}">
+                        <input type="hidden" name="_method" value="DELETE">
+                    </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>    
+{% endblock %}

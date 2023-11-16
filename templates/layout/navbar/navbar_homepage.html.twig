@@ -1,0 +1,51 @@
+{% block nav %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{path('welcome.index')}}"><img src="{{asset('images/logo/logo.png')}}" class="w-50 h-50 img-fluid" alt="logo du site"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active fs-4" aria-current="page" href="{{path('welcome.index')}}">Accueil</a>
+                    </li>
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('organization.index')}}">Organisations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('project.index')}}">Projets</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('customer.index')}}">Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('don.index')}}">Dons</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('users.index')}}">Utilisateurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="{{path('profil.index')}}">Mon profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-4" href="#">Changer de profil</a>
+                        </li>                      
+                    {% endif %} 
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if app.user %}
+                        <li class="nav-item btn btn-danger btn-sm">
+                            <a class="nav-link fs-4 " href="{{path('app.logout')}}">Déconnexion</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item  btn btn-info btn-sm">
+                            <a class="nav-link fs-4" href="{{path('authentication.login')}}">Connexion</a>
+                        </li>
+                    {% endif %}                
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

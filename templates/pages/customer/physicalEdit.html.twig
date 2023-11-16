@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="formulaire physical de modification ">
+    <title>Formulaire de modification</title>
+
+        {# favicon #}
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta
+    name="theme-color" content="#ffffff">
+
+        {# bootstrap et feuille de style #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+        {# Javascript #} 
+    {% block javascript %}{{ encore_entry_script_tags('app') }}{% endblock %}
+    {% block jsCode %}{% endblock %}
+
+</head>
+<body class="editForm1">
+    <main>
+        <div>
+            <h1 class="text-center my-5" data-aos="fade-up-left">Formulaire personne physique de modification</h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6 my-2">
+                    {{form_start(physicalForm)}}
+                        <div class="mb-3">
+                            <label for="physical_form_firstName">Prénom</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.firstName) }}</div>
+                            {{form_widget(physicalForm.firstName, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_lastName">Nom</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.lastName) }}</div>
+                            {{form_widget(physicalForm.lastName, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_dateBirthday">Date de naissance</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.dateBirthday) }}</div>
+                            {{form_widget(physicalForm.dateBirthday)}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_gender">Genre</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.gender) }}</div>
+                            {{form_widget(physicalForm.gender, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_email">Email</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.email) }}</div>
+                            {{form_widget(physicalForm.email, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_address">Adresse</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.address) }}</div>
+                            {{form_widget(physicalForm.address, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_zip">Code postal</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.zip) }}</div>
+                            {{form_widget(physicalForm.zip, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_city">Ville</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.city) }}</div>
+                            {{form_widget(physicalForm.city, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_country">Pays</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.country) }}</div>
+                            {{form_widget(physicalForm.country, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_isNPAI">Habitez-vous à cette addresse</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.isNPAI) }}</div>
+                            {{form_widget(physicalForm.isNPAI, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_organization">Choisissez une entité ou nom société qui sera associé au don</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.organization) }}</div>
+                            {{form_widget(physicalForm.organization, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="my-3">
+                            <input formnovalidate type="submit" class="btn btn-success w-25 shadow" value="Valider">
+                        </div>
+                    {{form_end(physicalForm)}}
+                </div>    
+            </div>
+        </div>
+    </main>
+</body>
+</html>

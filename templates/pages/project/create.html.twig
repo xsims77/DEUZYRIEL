@@ -1,0 +1,52 @@
+{% extends "themes/base_homepage.html.twig" %}
+
+{% block title %} - Créer un nouveau Projet {% endblock %}
+
+{% block description %} - Création d'un nouveau projet{% endblock %}
+
+{% block tinyMCE %}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+        selector: 'textarea#project_form_content'
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+    <h1 class="text-center my-5" data-aos="fade-left">Ajout d'un nouveau projet</h1>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-7 my-5">
+                {{form_start(projectForm)}}
+                    <div class="my-3">
+                        <label for="project_form_organizationName">Sélectionner une entitée ou un nom de société</label>
+                        <div class="text-danger">{{ form_errors(projectForm.organizationName) }}</div>
+                        {{form_widget(projectForm.organizationName, {'attr': {'class':'form-control'}})}}
+                    </div>
+                    <div class="my-3">
+                        <label for="project_form_projectName">Nom du projet</label>
+                        <div class="text-danger">{{ form_errors(projectForm.projectName) }}</div>
+                        {{form_widget(projectForm.projectName, {'attr':{'class':'form-control'}})}}
+                    </div>
+                    <div class="my-3">
+                        <label for="project_form_content">Description du projet</label>
+                        <div class="text-danger">{{ form_errors(projectForm.content) }}</div>
+                        {{form_widget(projectForm.content, {'attr':{'class': 'form-control', 'rows': 10}})}}
+                    </div>
+                    <div class="my-3">
+                        <input formnovalidate type="submit" class="btn btn-success w-25 shadow" value="Valider">
+                    </div>
+                {{form_end(projectForm)}}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

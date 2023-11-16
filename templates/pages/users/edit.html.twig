@@ -1,0 +1,91 @@
+{% extends "themes/base_homepage.html.twig" %}
+
+{% block title %} modifier un nouvel utilisateur {% endblock %}
+
+{% block description %} modification d'un nouvel utilisateur {% endblock %}
+
+{% block main %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
+
+	<h1 class="text-center my-5" data-aos="fade-left">Modifier l'utilisateur</h1>
+
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				{{form_start(userEditForm)}}
+				<div class="mb-3">
+					<label for="user_form_roleName">Choix du Rôle</label>
+					{{form_widget(userEditForm.roleName, {'attr':{'class':'form-control'}})}}
+					<div class="text-danger">{{ form_errors(userEditForm.roleName) }}</div>
+				</div>
+				<div class="mb-3">
+					<label for="user_form_firstName">Prénom</label>
+					<div class="text-danger">{{ form_errors(userEditForm.firstName) }}</div>
+					{{form_widget(userEditForm.firstName, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_lastName">Nom</label>
+					<div class="text-danger">{{ form_errors(userEditForm.lastName) }}</div>
+					{{form_widget(userEditForm.lastName, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_email">Email</label>
+					<div class="text-danger">{{ form_errors(userEditForm.email) }}</div>
+					{{form_widget(userEditForm.email, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_password_first">Mot de passe</label>
+					<div class="text-danger">{{ form_errors(userEditForm.password.first) }}</div>
+					{{form_widget(userEditForm.password.first, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_password_second">Mot de passe</label>
+					<div class="text-danger">{{ form_errors(userEditForm.password.second) }}</div>
+					{{form_widget(userEditForm.password.second, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_organizationName">Choix d'une entitée</label>
+					<div class="text-danger">{{ form_errors(userEditForm.organizationName) }}</div>
+					{{form_widget(userEditForm.organizationName, {'attr':{'class':'form-control'}})}}
+				</div>
+				<div class="mb-3">
+					<label for="user_form_agreeTerms">
+						{{ form_widget(userEditForm.agreeTerms) }}
+						<div class="text-danger">{{ form_errors(userEditForm.agreeTerms) }}</div>
+						Veuillez accepter
+						<a data-bs-toggle="modal" data-bs-target="#registerModal" href="#">les conditions générales d'utilisation</a>
+
+						<!-- Modal -->
+						<div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Qu'est-ce que le Lorem Ipsum?
+										Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.</p>
+
+										<p>
+											Pourquoi l'utiliser?
+										On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</label>
+				</div>
+				<div class="mb-3">
+					<input formnovalidate type="submit" class="btn btn-primary w-100 shadow">
+				</div>
+			{{form_end(userEditForm)}}
+			</div>
+		</div>
+	</div>
+{% endblock %}

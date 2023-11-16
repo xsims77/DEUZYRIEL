@@ -1,0 +1,42 @@
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>l'email de la réinitialisation du mot de passe</title>
+		<meta name="description" content="l'email de la réinitialisation du mot de passe">
+		
+
+		{# favicon #}
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta
+		name="theme-color" content="#ffffff">
+
+		{# font-family #}
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+
+        {# bootstrap et feuille de style #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{# Javascript #} 
+		{% block javascript %}{{ encore_entry_script_tags('app') }}{% endblock %}
+	</head>
+    <body>
+        <main class="container-fluid text-center my-5">
+            <h1 class="my-3">Un email de réinitialisation du mot de passe vous a été envoyé</h1>
+            <p>
+                S'il existe un compte correspondant à votre adresse e-mail, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.
+                Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou <a href="{{ path('authentication.forgot_password_request') }}">essayer à nouveau</a>.</p>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,158 @@
+{% extends "themes/base_homepage.html.twig" %}
+
+{% block title %} Créer un contact {% endblock %}
+
+{% block description %} Création d'un nouveau contact {% endblock %}
+
+{% block JQuery %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-5" data-aos="fade-left">Créer une nouveau Contact</h1>
+
+    <div class="container-fluid">
+        <div class="dropdown mb-5">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Choisir le formulaire adapter à votre entité
+            </a>
+
+            <ul class="dropdown-menu text-center">
+                <li><a class="btn btn-outline-success mb-2 btn1" href="#" >Physique</a></li>
+                <li><a class="btn btn-outline-success btn2" href="#">Morale</a></li>
+            </ul>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="my-2 physical">
+                    {{form_start(physicalForm)}}
+                        <div class="mb-3">
+                            <label for="physical_form_firstName">Prénom</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.firstName) }}</div>
+                            {{form_widget(physicalForm.firstName, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_lastName">Nom</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.lastName) }}</div>
+                            {{form_widget(physicalForm.lastName, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_dateBirthday">Date de naissance</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.dateBirthday) }}</div>
+                            {{form_widget(physicalForm.dateBirthday)}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_gender">Genre</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.gender) }}</div>
+                            {{form_widget(physicalForm.gender, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_email">Email</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.email) }}</div>
+                            {{form_widget(physicalForm.email, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_address">Adresse</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.address) }}</div>
+                            {{form_widget(physicalForm.address, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_zip">Code postal</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.zip) }}</div>
+                            {{form_widget(physicalForm.zip, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_city">Ville</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.city) }}</div>
+                            {{form_widget(physicalForm.city, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_country">Pays</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.country) }}</div>
+                            {{form_widget(physicalForm.country, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_isNPAI">Habitez-vous à cette addresse</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.isNPAI) }}</div>
+                            {{form_widget(physicalForm.isNPAI, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="physical_form_organization">Choisissez une entité ou nom société qui sera associé au don</label>
+                            <div class="text-danger">{{ form_errors(physicalForm.organization) }}</div>
+                            {{form_widget(physicalForm.organization, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="my-3">
+                            <input formnovalidate type="submit" class="btn btn-success w-25 shadow" value="Valider">
+                        </div>
+                    {{form_end(physicalForm)}}
+                </div>                    
+                <div class="my-5 moral">
+                    {{form_start(moralForm)}}
+                        <div class="mb-3">
+                            <label for="moral_form_companyName">Nom de la société</label>
+                            <div class="text-danger">{{ form_errors(moralForm.companyName) }}</div>
+                            {{form_widget(moralForm.companyName, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_companyType">Type de société</label>
+                            <div class="text-danger">{{ form_errors(moralForm.companyType) }}</div>
+                            {{form_widget(moralForm.companyType, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_siret">Numéro de siret/Siren</label>
+                            <div class="text-danger">{{ form_errors(moralForm.siret) }}</div>
+                            {{form_widget(moralForm.siret, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_email">Email</label>
+                            <div class="text-danger">{{ form_errors(moralForm.email) }}</div>
+                            {{form_widget(moralForm.email, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_address">Adresse</label>
+                            <div class="text-danger">{{ form_errors(moralForm.address) }}</div>
+                            {{form_widget(moralForm.address, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_zip">Code postal</label>
+                            <div class="text-danger">{{ form_errors(moralForm.zip) }}</div>
+                            {{form_widget(moralForm.zip, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_city">Ville</label>
+                            <div class="text-danger">{{ form_errors(moralForm.city) }}</div>
+                            {{form_widget(moralForm.city, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_country">Pays</label>
+                            <div class="text-danger">{{ form_errors(moralForm.country) }}</div>
+                            {{form_widget(moralForm.country, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_organization">Choisissez une entité ou nom société qui sera associé au don</label>
+                            <div class="text-danger">{{ form_errors(moralForm.organization) }}</div>
+                            {{form_widget(moralForm.organization, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="my-3">
+                            <input formnovalidate type="submit" class="btn btn-success w-25 shadow" value="Valider">
+                        </div>
+                    {{form_end(moralForm)}}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jsCode %}
+    <script>
+        $(document).ready(function(){
+    const btn = $(".btn1");
+    const btn1 = $(".btn2");
+    btn.click(()=>{
+        $(".physical").toggle(700);
+    })
+    btn1.click(()=>{
+        $(".moral").toggle(700);
+    })
+})
+    </script>
+{% endblock %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulaire de don">
+    <title>Don</title>
+    
+    {# favicon #}
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta
+    name="theme-color" content="#ffffff">
+
+    {# bootstrap et feuille de style #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+    <nav class="nav nav-pills nav-fill">
+        <a class="nav-link active" aria-current="page" href="{{path('don.index')}}"><span class="display-6">Retour</span></a>
+    </nav>
+
+
+    <main class="mt-5">
+        <div class="mt-5 d-flex justify-content-center align-atems-center">
+            <div class="book">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-6">
+                            {{form_start(form)}}
+                                <div class="mb-3">
+                                    <label for="don_form_project">Choix du projet</label>
+                                    <div class="text-danger">{{form_errors(form.project)}}</div>
+                                    {{form_widget(form.project, {'attr':{'class':'form-control'}})}}
+                                </div>
+                                <div class="mb-3 input-container">
+                                    <div class="text-danger">{{form_errors(form.donation_amount)}}</div>
+                                    {{form_widget(form.donation_amount)}}
+                                    <label for="don_form_donation_amount" class="label">Montant</label>
+                                    <div class="underline"></div>
+                                </div>
+                                <div class="mb-3 input-container">
+                                    <div class="text-danger">{{form_errors(form.donation_currency)}}</div>
+                                    {{form_widget(form.donation_currency)}}
+                                    <label for="don_form_donation_currency" class="label">Device</label>
+                                    <div class="underline"></div>
+                                </div>
+                                <div class="text-center">
+                                    <input formnovalidate type="submit" class="btn btn-primary width-50">
+                                </div>
+                            {{form_end(form)}}
+                        </div>
+                    </div>
+                <div class="cover">
+                    <h2 class="text-center my-5">Ajouter un don à {{physical.firstName}} {{physical.lastname}}</h2>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,11 @@
+html, .d-body
+{
+    height: 100%;
+}
+
+.d-body
+{
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #EBF6FF;
+}

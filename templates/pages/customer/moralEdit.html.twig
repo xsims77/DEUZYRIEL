@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="formulaire moral de modification ">
+    <title>Formulaire de modification</title>
+
+        {# favicon #}
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta
+    name="theme-color" content="#ffffff">
+
+        {# bootstrap et feuille de style #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+        {# Javascript #} 
+    {% block javascript %}{{ encore_entry_script_tags('app') }}{% endblock %}
+    {% block jsCode %}{% endblock %}
+
+</head>
+<body class="editForm1">
+    <main>
+        <div>
+            <h1 class="text-center my-5" data-aos="fade-up-right">Formulaire personne moral de modification</h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-6 my-2">
+                    {{form_start(moralForm)}}
+                        <div class="mb-3">
+                            <label for="moral_form_companyName">Nom de la société</label>
+                            <div class="text-danger">{{ form_errors(moralForm.companyName) }}</div>
+                            {{form_widget(moralForm.companyName, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_companyType">Type de société</label>
+                            <div class="text-danger">{{ form_errors(moralForm.companyType) }}</div>
+                            {{form_widget(moralForm.companyType, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_siret">Numéro de siret/Siren</label>
+                            <div class="text-danger">{{ form_errors(moralForm.siret) }}</div>
+                            {{form_widget(moralForm.siret, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_email">Email</label>
+                            <div class="text-danger">{{ form_errors(moralForm.email) }}</div>
+                            {{form_widget(moralForm.email, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_address">Adresse</label>
+                            <div class="text-danger">{{ form_errors(moralForm.address) }}</div>
+                            {{form_widget(moralForm.address, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_zip">Code postal</label>
+                            <div class="text-danger">{{ form_errors(moralForm.zip) }}</div>
+                            {{form_widget(moralForm.zip, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_city">Ville</label>
+                            <div class="text-danger">{{ form_errors(moralForm.city) }}</div>
+                            {{form_widget(moralForm.city, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_country">Pays</label>
+                            <div class="text-danger">{{ form_errors(moralForm.country) }}</div>
+                            {{form_widget(moralForm.country, {'attr': {'class':'form-control'}})}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="moral_form_organization">Choisissez une entité ou nom société qui sera associé au don</label>
+                            <div class="text-danger">{{ form_errors(moralForm.organization) }}</div>
+                            {{form_widget(moralForm.organization, {'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="my-3">
+                            <input formnovalidate type="submit" class="btn btn-success w-25 shadow" value="Valider">
+                        </div>
+                    {{form_end(moralForm)}}
+                </div>    
+            </div>
+        </div>
+    </main>
+</body>
+</html>
