@@ -105,12 +105,10 @@ class CustomerController extends AbstractController
         return $this->redirectToRoute('customer.index');
     }
 
-    #[Route('/customer/{id}/moralEdit', name: 'customer.moralEdit', methods:['GET','PUT'])]
+    #[Route('/customer/{id}/moralEdit', name: 'customer.moralEdit', methods:['GET','POST'])]
     public function moralEdit(MoralCustomers $moral, Request $request, EntityManagerInterface $em) : Response
     {
-        $form = $this->createForm(MoralFormType::class, $moral, [
-            'method'    => 'PUT'
-        ]);
+        $form = $this->createForm(MoralFormType::class, $moral);
 
         $form->handleRequest($request);
 

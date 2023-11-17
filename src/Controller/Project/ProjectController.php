@@ -63,7 +63,7 @@ class ProjectController extends AbstractController
     {
 
         $form = $this->createForm(ProjectFormType::class, $project, [
-            "method"    => 'PUT'
+            "method"    => "PUT"
         ]);
 
         $form->handleRequest($request);

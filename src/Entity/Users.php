@@ -76,7 +76,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: "Le mot de passe ne doit pas dépasser {{ limit }} caractères",
         )]
     #[Assert\Regex(
-        pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
+        pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{12,255}$/",
         match: true,
         message: "Le mot de passe doit contenir au moins une lettres minuscule, majuscule, un chiffre et un caractère spécial",
         )]
@@ -94,7 +94,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Relation::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Relation::class, orphanRemoval: true)]
     private Collection $relations;
 
     public function __construct()
@@ -174,12 +174,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): ?static
     {
         $this->password = $password;
 

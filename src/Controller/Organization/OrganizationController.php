@@ -45,7 +45,7 @@ class OrganizationController extends AbstractController
         ]);
     }
 
-    #[Route('/organization/{id}/edit', name: 'organization.edit', methods:['GET', 'PUT'])]
+    #[Route('/organization/{id}/edit', name: 'organization.edit', methods:['GET','PUT'])]
     public function organizationEdit(Organization $organization, Request $request, EntityManagerInterface $em) : Response
     {
         $form = $this->createForm(OrganizationFormType::class, $organization, [

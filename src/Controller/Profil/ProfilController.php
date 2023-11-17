@@ -46,13 +46,13 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    #[Route('/profil/edit_password', name: 'profil.edit_password', methods:['GET', 'PUT'])]
+    #[Route('/profil/edit_password', name: 'profil.edit_password', methods:['GET','PUT'])]
     public function editPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em) : Response
     {
         $user = $this->getUser();
 
         $form = $this->createForm(EditProfilPasswordFormType::class, null, [
-            "method" => "PUT"
+            "method"    => "PUT"
         ]);
 
         $form->handleRequest($request);
@@ -69,7 +69,7 @@ class ProfilController extends AbstractController
 
             $this->addFlash("success", "Votre nouveau mot de passe a bien été pris en compte");
 
-            return $this->redirectToRoute('admin.profil');
+            return $this->redirectToRoute('profil.index');
         }
 
         return $this->render("pages/profil/edit_password.html.twig", [

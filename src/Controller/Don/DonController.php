@@ -86,7 +86,7 @@ class DonController extends AbstractController
     public function donEdit(Donations $don, Request $request, EntityManagerInterface $em) : Response
     {
         $form = $this->createForm(DonFormType::class, $don, [
-            'method'    => 'PUT'
+            "method"    => "PUT"
         ]);
         $form->handleRequest($request);
         $projectId = $form->get('project')->getData();
