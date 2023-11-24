@@ -36,13 +36,14 @@ class RelationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Relation
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findBySomeField(int $value): array
+   {
+       return $this->createQueryBuilder('r')
+            ->andWhere('r.user = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+       ;
+   }
 }

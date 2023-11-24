@@ -7,26 +7,69 @@ use App\Form\ProjectFormType;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrganizationRepository;
+use App\Repository\RolesRepository;
+use App\Template\TemplateManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ProjectController extends AbstractController
+class ProjectController extends TemplateManager
 {
     #[Route('/project', name: 'project.index', methods:['GET'])]
-    public function project(ProjectRepository $projectRepository) : Response
+    public function project(ProjectRepository $projectRepository, Request $request, RolesRepository $rolesRepository) : Response
     {
 
-        $projects = $projectRepository->findBy([], ['createdAt'=> 'DESC']);
+        $activeRelation = $request->getSession()->get('active_relation');
+        // [id_orga => id_role]
+        
+        if (empty($activeRelation)) {
+            $this->addFlash("warning", "Un problème est survenue sur votre connexion, veuillez vous reconnecter.");
+            return $this->redirectToRoute('app.logout');
+        }
+        
+        /* 
+        $array = [
+            'test' => 'test',
+            5 => '5',
+            '6' => 5
+        ];
 
-        return $this->render('pages/project/index.html.twig', compact('projects'));
+        array_values 
+        [
+            0 => 'test',
+            1 => '5',
+            2 => 5
+        ]
+
+        array_key_first ($array)
+        test
+
+        */
+
+        $role = $rolesRepository->findBy(['id' => array_values($activeRelation)[0]]);
+
+        if ($role[0]->getRoleName() == "ROLE_ADMIN")
+        {
+            $projects = $projectRepository->findAll();
+        }else
+        {
+            $projects = $projectRepository->findBy(['organization' => array_key_first($activeRelation)]);
+        }
+
+        return $this->display($request, 'pages/project/index.html.twig', [
+            "projects"  => $projects,
+            "role"      => $role
+        ]);
     }
 
     #[Route('/project/create', name: 'project.create', methods:['GET', 'POST'])]
     public function projectCreate(Request $request, EntityManagerInterface $em, OrganizationRepository $organizationRepository) : Response
     {
 
+        $activeRelation = $request->getSession()->get('active_relation');
+        
+    
+        
         if( count($organizationRepository->findAll()) == 0)
         {
             $this->addFlash("warning", "Vous devez créer au moins une organisation avant de créer un projet.");
@@ -35,12 +78,13 @@ class ProjectController extends AbstractController
 
 
         $project = new Project();
+        $organizations = $organizationRepository->findBy(['id' => array_key_first($activeRelation)]);
 
-        $form = $this->createForm(ProjectFormType::class, $project);
+        $form = $this->createForm(ProjectFormType::class, $project, ['organizations' => $organizations]);
         
         $form->handleRequest($request);
 
-        $organizationId = $form->get('organizationName')->getData();
+        $organizationId = $form->get('organization')->getData();
         
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -53,7 +97,7 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project.index');
         }
 
-        return $this->render('pages/project/create.html.twig', [
+        return $this->display($request, 'pages/project/create.html.twig', [
             'projectForm'   => $form->createView()
         ]);
     }
@@ -84,14 +128,14 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project.index');
         }
 
-        return $this->render('pages/project/edit.html.twig', [
+        return $this->display($request, 'pages/project/edit.html.twig', [
             "projectForm"   => $form->createView(),
             "project"       => $project
         ]);
     }
 
     #[Route('/project/{id}/show', name: 'project.show', methods:['GET'])]
-    public function projectShow(Project $project, OrganizationRepository $organizationRepository) : Response
+    public function projectShow(Request $request, Project $project, OrganizationRepository $organizationRepository) : Response
     {
         if ( count($organizationRepository->findAll()) == 0)
         {
@@ -99,7 +143,7 @@ class ProjectController extends AbstractController
 
             return $this->redirectToRoute('admin.organization');
         }
-        return $this->render("pages/project/show.html.twig", compact("project"));
+        return $this->display($request, "pages/project/show.html.twig", compact("project"));
     }
 
     #[Route('/project/{id}/delete', name: 'project.delete', methods:['DELETE'])]

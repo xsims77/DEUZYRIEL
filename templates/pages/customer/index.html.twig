@@ -1,39 +1,16 @@
 {% extends "themes/base_homepage.html.twig" %}
 
-{% block title %} - Les contacts - {% endblock %}
+{% block title %}  Contact  {% endblock %}
 
-{% block description %} - Tout les contacts - {% endblock %}
-
+{% block description %}  Contacts  {% endblock %}
 
 {% block JQuery %}
     {# Jquery #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% endblock %}
 
-{% block dataTables %}
-    {# Datatable #}
-    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
-
-
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable({
-                language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json',
-            },
-            });            
-            $('#myTable1').DataTable({
-                language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json',
-            },
-            });            
-        } );
-    </script>
-{% endblock %}
-
 {% block main %}
-    <h1 class="text-center my-5" data-aos="fade-right">Liste des contacts</h1>
+    <h1 class="text-center my-5" data-aos="fade-right">Contact</h1>
 
     {% for message in app.flashes('success') %}
         <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
@@ -41,125 +18,30 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
+    
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Donateur type
+        </a>
 
-    <div class="container-fluid">
-        <a href="{{path('customer.create')}}" class="btn btn-info">Créer une nouvelle fiche</a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{{path('project.customer.physical',{'id_project':project.id})}}">Donateur Physique</a></li>
+            <li><a class="dropdown-item" href="{{path('project.customer.moral',{'id_project':project.id})}}">Donateur Moral</a></li>
+        </ul>
+    </div>
+    <div class="mt-2">
+        <img src="{{asset('images/illustration/illustrationContact.jpg')}}" class="img-fluid" alt="illustration de ma page contact">
+    </div>
+    
+    <div class="d-flex justify-content-center mt-2">
+        <button class="Return">  
+            <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+            
+            <a href="{{path('project.index')}}" class="text text-decoration-none">Retour</a>
+        </button>
     </div>
 
-    <div><h2 class="text-center my-5">Donateur Physique</h2></div>
-    <div class="table-responsive my-5">
-        <table id="myTable" class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Donataire</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Genre</th>
-                    <th>Date d'anniversaire</th>
-                    <th>Email</th>
-                    <th>Addresse</th>
-                    <th>Code postale</th>
-                    <th>Ville</th>
-                    <th>Pays</th>
-                    <th>Domicilié à l'adresse ou non</th>
-                    <th>Ajouté le :</th>
-                    <th>Modifié le :</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for physical in physicals %}
-                <tr>
-                    <td>{{physical.id}}</td>
-                    <td>{{physical.organization.getOrganizationName()}}</td>
-                    <td>{{physical.firstName}}</td>
-                    <td>{{physical.lastName}}</td>
-                    <td>{{physical.gender}}</td>
-                    <td>{{physical.dateBirthday|date('d-m-Y')}}</td>
-                    <td>{{physical.email}}</td>
-                    <td>{{physical.address}}</td>
-                    <td>{{physical.zip}}</td>
-                    <td>{{physical.city}}</td>
-                    <td>{{physical.country}}</td>
-                    <td>{{physical.isNPAI}}</td>
-                    <td>{{physical.createdAt|date('d-m-Y')}}</td>
-                    <td>{{physical.updatedAt|date('d-m-Y')}}</td>
-                    <td class="d-flex flex-column justify-content-center align-items-center">
-                    <a href="{{path('don.physicalCreate',{'id':physical.id})}}" class="mb-2"><button class="buttonD">Ajouter un DON</button></a>
-                    <a href="{{path('customer.physicalEdit',{'id':physical.id})}}" class="text-decoration-none mb-2">
-                            <button title="Modifier" class="cssbuttons-io-button">
-                            <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path></svg>
-                            <span>Modifier</span>
-                            </button></a>
-                    <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer ce donateur?') && document.querySelector('#physical_delete_form_{{physical.id}}').submit()" href="#" class="text-decoration-none">
-                            <button class="custom-btn btn-1">Supprimer</button></a>
-                    <form method="POST" id="physical_delete_form_{{physical.id}}" action="{{path('customer.physicalDelete',{'id':physical.id})}}">
-                        <input type="hidden" name="csrf_token" value="{{csrf_token('physical_delete_'~physical.id)}}">
-                        <input type="hidden" name="_method" value="DELETE">
-                    </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 
-    <div><h2 class="text-center my-5">Donateur Moral</h2></div>
-    <div class="table-responsive my-5">
-        <table id="myTable1" class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Donateur</th>
-                    <th>Nom de la société</th>
-                    <th>Type de société</th>
-                    <th>Numéro de Siret/Siren</th>
-                    <th>Email</th>
-                    <th>Addresse</th>
-                    <th>Code postale</th>
-                    <th>Ville</th>
-                    <th>Pays</th>
-                    <th>Ajouté le :</th>
-                    <th>Modifié le :</th>
-                    <th>Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for moral in morals %}
-                <tr>
-                    <td>{{moral.id}}</td>
-                    <td>{{moral.organization.getOrganizationName}}</td>
-                    <td>{{moral.companyName}}</td>
-                    <td>{{moral.companyType}}</td>
-                    <td>{{moral.siret}}</td>
-                    <td>{{moral.email}}</td>
-                    <td>{{moral.address}}</td>
-                    <td>{{moral.zip}}</td>
-                    <td>{{moral.city}}</td>
-                    <td>{{moral.country}}</td>
-                    <td>{{moral.createdAt|date('d-m-Y')}}</td>
-                    <td>{{moral.updatedAt|date('d-m-Y')}}</td>
-                    <td class="d-flex flex-column justify-content-center align-items-center">
-                        <a href="{{path('don.moralCreate',{'id':moral.id})}}" class="mb-2"><button class="buttonD">Ajouter un DON</button></a>
-                        <a href="{{path('customer.moralEdit',{'id':moral.id})}}" class="text-decoration-none mb-2">
-                            <button title="Modifier" class="cssbuttons-io-button">
-                            <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" fill="currentColor"></path></svg>
-                            <span>Modifier</span>
-                            </button>
-                        </a>
-                        <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer ce donateur?') && document.querySelector('#moral_delete_form_{{moral.id}}').submit() " href="#" class="text-decoration-none">
-                            <button class="custom-btn btn-1">Supprimer</button>
-                        </a>
-                        <form action="{{path('customer.moralDelete',{'id':moral.id})}}" id="moral_delete_form_{{moral.id}}" method="POST">
-                            <input type="hidden" name="csrf_token" value="{{csrf_token('moral_delete_'~moral.id)}}">
-                            <input type="hidden" name="_method" value="DELETE">
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+
 
 {% endblock %}

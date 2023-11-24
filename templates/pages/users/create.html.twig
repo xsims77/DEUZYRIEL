@@ -4,10 +4,6 @@
 
 {% block description %} Création d'un nouvel utilisateur {% endblock %}
 
-{% block JQuery %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{% endblock %}
-
 {% block main %}
 
 	{% for flash_error in app.flashes('verify_email_error') %}
@@ -33,11 +29,13 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				{{form_start(form)}}
-				<div class="mb-3">
-					<label for="user_form_roleName">Choix du Rôle</label>
-					<div class="text-danger">{{ form_errors(form.roleName) }}</div>
-					{{form_widget(form.roleName, {'attr':{'class':'form-control'}})}}
-				</div>
+				{% if active_role == 1 %}
+					<div class="mb-3">
+						<label for="user_form_roleName">Choix du Rôle</label>
+						<div class="text-danger">{{ form_errors(form.roleName) }}</div>
+						{{form_widget(form.roleName, {'attr':{'class':'form-control'}})}}
+					</div>
+				{% endif %}
 				<div class="mb-3">
 					<label for="user_form_firstName">Prénom</label>
 					<div class="text-danger">{{ form_errors(form.firstName) }}</div>
@@ -62,12 +60,14 @@
 					<label for="user_form_password_second">Mot de passe</label>
 					<div class="text-danger">{{ form_errors(form.password.second) }}</div>
 					{{form_widget(form.password.second, {'attr':{'class':'form-control'}})}}
-				</div>		
-				<div class="mb-3 disappears">
-					<label for="user_form_organizationName">Choix d'une organisation</label>
-					<div class="text-danger">{{ form_errors(form.organizationName) }}</div>
-					{{form_widget(form.organizationName, {'attr':{'class':'form-control'}})}}
 				</div>
+				{% if active_role == 1 %}
+					<div class="mb-3">
+						<label for="user_form_organizationName">Choix d'une organisation</label>
+						<div class="text-danger">{{ form_errors(form.organizationName) }}</div>
+						{{form_widget(form.organizationName, {'attr':{'class':'form-control'}})}}
+					</div>
+				{% endif %}
 				<div class="mb-3">
 					<label for="user_form_agreeTerms">
 						{{ form_widget(form.agreeTerms) }}
@@ -107,20 +107,4 @@
 		</div>
 	</div>
 
-{% endblock %}
-{% block jsCode %}
-    <script>
-        $(document).ready(()=>{
-			$("select#user_form_roleName").change(function(){
-				const role = $(this).children("option:selected").val();
-				if(role === "9")
-				{
-					$(".disappears").css("display","none");
-				}else
-				{
-					$(".disappears").css("display","block");
-				}
-			});
-        })
-    </script>
 {% endblock %}

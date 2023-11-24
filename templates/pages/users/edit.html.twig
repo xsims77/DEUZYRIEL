@@ -15,11 +15,13 @@
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				{{form_start(userEditForm)}}
-				<div class="mb-3">
-					<label for="user_form_roleName">Choix du Rôle</label>
-					{{form_widget(userEditForm.roleName, {'attr':{'class':'form-control'}})}}
-					<div class="text-danger">{{ form_errors(userEditForm.roleName) }}</div>
-				</div>
+					{% if active_role == 1 %}
+						<div class="mb-3">
+							<label for="user_form_roleName">Choix du Rôle</label>
+							{{form_widget(userEditForm.roleName, {'attr':{'class':'form-control'}})}}
+							<div class="text-danger">{{ form_errors(userEditForm.roleName) }}</div>
+						</div>
+					{% endif %}	
 				<div class="mb-3">
 					<label for="user_form_firstName">Prénom</label>
 					<div class="text-danger">{{ form_errors(userEditForm.firstName) }}</div>
@@ -45,11 +47,13 @@
 					<div class="text-danger">{{ form_errors(userEditForm.password.second) }}</div>
 					{{form_widget(userEditForm.password.second, {'attr':{'class':'form-control'}})}}
 				</div>
-				<div class="mb-3">
-					<label for="user_form_organizationName">Choix d'une entitée</label>
-					<div class="text-danger">{{ form_errors(userEditForm.organizationName) }}</div>
-					{{form_widget(userEditForm.organizationName, {'attr':{'class':'form-control'}})}}
-				</div>
+				{% if active_role == 1 %}
+					<div class="mb-3">
+						<label for="user_form_organizationName">Choix d'une entitée</label>
+						<div class="text-danger">{{ form_errors(userEditForm.organizationName) }}</div>
+						{{form_widget(userEditForm.organizationName, {'attr':{'class':'form-control'}})}}
+					</div>
+				{% endif %}			
 				<div class="mb-3">
 					<label for="user_form_agreeTerms">
 						{{ form_widget(userEditForm.agreeTerms) }}

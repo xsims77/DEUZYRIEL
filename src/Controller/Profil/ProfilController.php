@@ -3,20 +3,20 @@
 namespace App\Controller\Profil;
 
 use App\Form\ProfilFormType;
+use App\Template\TemplateManager;
 use App\Form\EditProfilPasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class ProfilController extends AbstractController
+class ProfilController extends TemplateManager
 {
     #[Route('/profil', name: 'profil.index', methods:["GET"])]
-    public function index() :Response
+    public function index(Request $request) :Response
     {
-        return $this->render("pages/profil/profil.html.twig");
+        return $this->display($request, "pages/profil/profil.html.twig");
     }
 
     
@@ -41,7 +41,7 @@ class ProfilController extends AbstractController
             
             return $this->redirectToRoute('profil.index');
         }
-        return $this->render('pages/profil/edit.html.twig', [
+        return $this->display($request, 'pages/profil/edit.html.twig', [
             "profilForm"    => $form->createView()
         ]);
     }
@@ -72,7 +72,7 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('profil.index');
         }
 
-        return $this->render("pages/profil/edit_password.html.twig", [
+        return $this->display($request, "pages/profil/edit_password.html.twig", [
             'form'  => $form->createView()
         ]);
     }

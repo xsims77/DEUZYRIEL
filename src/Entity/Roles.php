@@ -15,7 +15,7 @@ class Roles
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'role', targetEntity: Relation::class)]
+    #[ORM\OneToMany(mappedBy: 'role', targetEntity: Relation::class, orphanRemoval:true)]
     private Collection $relations;
 
     #[ORM\Column(length: 255)]

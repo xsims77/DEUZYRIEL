@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserFormType extends AbstractType
 {
-    private $user;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -31,34 +30,39 @@ class UserFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe doit être identique.',
                 'required' => true,
-            ])
+            ]);
+
+        if (isset($options['role_id']) && $options['role_id'] == 1) {
+        $builder
             ->add('organizationName', EntityType::class,[
                 'mapped'        => false,
                 'required'      => true,
                 'class'         => Organization::class,
                 'choice_label'  => 'organizationName',
                 'placeholder'   => 'Sélectionnez une organisation',            
-            ])               
+            ])
             ->add('roleName', EntityType::class, [
-                'mapped'        => false,
-                'required'      => true,
-                'class'         => Roles::class,
-                'choice_label'  => 'roleName',
-                'placeholder'   => 'Sélectionnez un rôle',
-                'constraints' => [
-                    new NotBlank([
-                      'message' => 'Veuillez choisir le rôle de l\'utilisateur.',
-                    ])
-                  ]
-            ])
+            'mapped'        => false,
+            'required'      => true,
+            'class'         => Roles::class,
+            'choice_label'  => 'roleName',
+            'placeholder'   => 'Sélectionnez un rôle',
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Veuillez choisir le rôle de l\'utilisateur.',
+                ])
+            ]
+        ]);
+        }
+        $builder
             ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Veuillez lire et accepter les conditions générale d\'utilisation.',
-                    ]),
-                ],
-            ])
+            'mapped' => false,
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'Veuillez lire et accepter les conditions générale d\'utilisation.',
+                ]),
+            ],
+        ])
         ;
 
     }
@@ -67,6 +71,7 @@ class UserFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Users::class,
+            'role_id'  => null,
         ]);
     }
 }

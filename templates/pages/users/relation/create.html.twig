@@ -1,0 +1,30 @@
+{% extends "themes/base_homepage.html.twig" %}
+
+{% block title %} Relation {% endblock %}
+
+{% block description %} Rajoute une relation à un utiliseur {% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-5">Ajouter une relation à l'utilisateur</h1>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{form_start(form)}}
+                    <div class="mb-3">
+                        <label for="">Rôle</label>
+                        {{form_widget(form.role, {'attr': {'class': 'form-control'}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Organisation</label>
+                        <div></div>
+                        {{form_widget(form.organization, {'attr': {'class': 'form-control'}})}}
+                    </div>
+                    <div class="mb-3">
+                        <input formnovalidate type="submit" class="btn btn-primary width-50">
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

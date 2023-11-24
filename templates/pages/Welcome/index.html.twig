@@ -15,12 +15,16 @@
                 <h1>Bienvenue sur DEUZYRIEL</h1>
             </div>
         </div>
+        {% for message in app.flashes('warning') %}
+            <div class="text-center alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
 
         <div class="row text-center">
             <div class="col-md-6 col-lg-3">
                 <div class="e-card playing">
-                    <div class="image"></div>
-                    
                     <div class="wave"></div>
                     <div class="wave"></div>
                     <div class="wave"></div>
@@ -72,8 +76,6 @@
             </div>
             <div class="col-md-6 col-lg-3">
                 <div class="e-card playing">
-                    <div class="image"></div>
-                    
                     <div class="wave"></div>
                     <div class="wave"></div>
                     <div class="wave"></div>
@@ -125,8 +127,6 @@
             </div>
             <div class="col-md-6 col-lg-3">
                 <div class="e-card playing">
-                    <div class="image"></div>
-                    
                     <div class="wave"></div>
                     <div class="wave"></div>
                     <div class="wave"></div>
@@ -178,8 +178,6 @@
             </div>
             <div class="col-md-6 col-lg-3 mx-lg-auto">
                 <div class="e-card playing">
-                    <div class="image"></div>
-                    
                     <div class="wave"></div>
                     <div class="wave"></div>
                     <div class="wave"></div>

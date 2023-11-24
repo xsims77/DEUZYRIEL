@@ -18,7 +18,9 @@ class DonFormType extends AbstractType
     {
         $builder
             ->add('donation_amount', NumberType::class)
-            ->add('donation_currency', TextType::class)
+            ->add('donation_currency', TextType::class);
+    if (isset($options['role_id']) && $options['role_id'] == 1) {
+        $builder
             ->add('project', EntityType::class, [
                 'mapped'    => false,
                 'required'  => true,
@@ -28,7 +30,8 @@ class DonFormType extends AbstractType
                 'constraints'   => [new NotBlank([
                     'message'   => 'Veuillez choisir un projet parmis la liste proposée.',
                 ])]
-            ])
+            ]);
+        }
         ;
     }
 
@@ -36,6 +39,7 @@ class DonFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Donations::class,
+            'role_id'    => null,
         ]);
     }
 }

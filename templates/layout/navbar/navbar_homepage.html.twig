@@ -1,9 +1,10 @@
-                        {{dump(app.user.relations)}}
-                        {{dump(app.user)}}
+
 {% block nav %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{path('welcome.index')}}"><img src="{{asset('images/logo/logo.png')}}" class="w-50 h-50 img-fluid" alt="logo du site"></a>
+            <a class="navbar-brand" href="{{path('welcome.index')}}">
+                <img src="{{asset('images/logo/logo.png')}}" class="w-50 h-50 img-fluid" alt="logo du site">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -13,66 +14,25 @@
                         <a class="nav-link active fs-4" aria-current="page" href="{{path('welcome.index')}}">Accueil</a>
                     </li>
                     {% if app.user %}
-                        {# {% if app.user.relations.role == "1" %} #}
+                        {% if active_role <= 2 %}
+                             <li class="nav-item">
+                                <a class="nav-link fs-4" href="{{path('users.index')}}">Utilisateurs</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link fs-4" href="{{path('organization.index')}}">Organisations</a>
                             </li>
-                               <li class="nav-item">
+                        {% endif %}
+                            <li class="nav-item">
                                 <a class="nav-link fs-4" href="{{path('project.index')}}">Projets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('customer.index')}}">Contacts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('don.index')}}">Dons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('users.index')}}">Utilisateurs</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fs-4" href="{{path('profil.index')}}">Mon profil</a>
                             </li>
+                        {% if nb_relations > 1 %}
                             <li class="nav-item">
-                                <a class="nav-link fs-4" href="#">Changer de profil</a>
-                            </li>                      
-                        {# {% endif %} #}
-                        {# {% if app.user.relation.role == "2" %} #}
-                            {# <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('project.index')}}">Projets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('customer.index')}}">Contacts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('don.index')}}">Dons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('users.index')}}">Utilisateurs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('profil.index')}}">Mon profil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="#">Changer de profil</a>
-                            </li>                       #}
-                        {# {% endif %}
-                        {% if app.user.relation.role == "3" %} #}
-                            {# <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('project.index')}}">Projets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('customer.index')}}">Contacts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('don.index')}}">Dons</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="{{path('profil.index')}}">Mon profil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="#">Changer de profil</a>
-                            </li>        #}
-                        {# {% endif %}  #}
+                                <a class="nav-link fs-4" href="{{path('change_profil.index')}}">Changer de profil</a>
+                            </li>                
+                        {% endif %}      
                     {% endif %} 
                 </ul>
                 <ul class="navbar-nav ms-auto">

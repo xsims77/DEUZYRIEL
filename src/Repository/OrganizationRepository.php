@@ -21,6 +21,15 @@ class OrganizationRepository extends ServiceEntityRepository
         parent::__construct($registry, Organization::class);
     }
 
+
+    public function findAllNonAdmin()
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.isAdmin = 0')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 //    /**
 //     * @return Organization[] Returns an array of Organization objects
 //     */

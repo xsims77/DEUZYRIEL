@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\RelationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -234,4 +235,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function updateRelation(RelationRepository $relationRepository) 
+    {
+        $relations = $relationRepository->findBySomeField($this->getId());
+        if (!empty($relations)) {
+            $this->relations = new ArrayCollection();
+            foreach ($relations as $relation) {
+                $this->relations->add($relation);
+            }
+        }
+    } 
 }

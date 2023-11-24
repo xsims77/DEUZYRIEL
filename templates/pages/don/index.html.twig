@@ -15,31 +15,36 @@
     {% endfor %}
 
     <div class="container-fluid d-flex flex-column align-items-center">
-        {% for don in dons %}
-        <div class="cardDon mt-5 mb-5">
-            <div class="content">
-                    <p class="heading">Donateur: 
-                    {% if don.moralCustomer == null %}
-                    {{don.physicalCustomer.firstName}} {{don.physicalCustomer.lastName}}
-                    {% elseif don.physicalCustomer == null %}
-                        {{don.moralCustomer.companyName}}
-                    {% endif %}                  
-                    </p>
-                    <ul class="para list-unstyled">
-                        <li>Nom du Projet : {{don.project.projectName}}</li>
-                        <li>Montant {{don.donationAmount}}</li>
-                        <li>Device en {{don.donationCurrency}}</li>
-                        <li>Ajouté le {{don.createdAt|date('d-m-Y')}}</li>
-                        <li>Modifié le {{don.updatedAt|date('d-m-Y')}}</li>
-                    </ul>
-                    <a href="{{path('don.edit',{'id':don.id})}}" class="btnDon mb-3">Modification du don</a>
-                    <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer ce don ?') && document.querySelector('#don_delete_form_{{don.id}}').submit()" href="#" class="btnDon">Supprimer le Don</a>
-                    <form method="POST" id="don_delete_form_{{don.id}}" action="{{path('don.delete',{'id':don.id})}}">
-                        <input type="hidden" name="csrf_token" value="{{csrf_token('don_delete_'~don.id)}}">
-                        <input type="hidden" name="_method" value="DELETE">
-                    </form>
-            </div>
-        </div>
-        {% endfor %}
+
+        {% if dons is empty %}
+            <p class="text-center display-6">Il n'y a pas de don pour le moment</p>
+        {% else %}
+            {% for don in dons %}
+                <div class="cardDon mt-5 mb-5">
+                    <div class="content">
+                        <p class="heading">Donateur: 
+                        {% if don.moralCustomer == null %}
+                        {{don.physicalCustomer.firstName}} {{don.physicalCustomer.lastName}}
+                        {% elseif don.physicalCustomer == null %}
+                            {{don.moralCustomer.companyName}}
+                        {% endif %}                  
+                        </p>
+                        <ul class="para list-unstyled">
+                            <li>Nom du Projet : {{project.projectName}}</li>
+                            <li>Montant {{don.donationAmount}}</li>
+                            <li>Device en {{don.donationCurrency}}</li>
+                            <li>Ajouté le {{don.createdAt|date('d-m-Y')}}</li>
+                            <li>Modifié le {{don.updatedAt|date('d-m-Y')}}</li>
+                        </ul>
+                        <a href="{{path('don.edit',{'id':don.id})}}" class="btnDon mb-3">Modification du don</a>
+                        <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer ce don ?') && document.querySelector('#don_delete_form_{{don.id}}').submit()" href="#" class="btnDon">Supprimer le Don</a>
+                        <form method="POST" id="don_delete_form_{{don.id}}" action="{{path('don.delete',{'id':don.id})}}">
+                            <input type="hidden" name="csrf_token" value="{{csrf_token('don_delete_'~don.id)}}">
+                            <input type="hidden" name="_method" value="DELETE">
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}    
     </div>    
 {% endblock %}

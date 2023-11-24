@@ -24,19 +24,22 @@ class MoralFormType extends AbstractType
             ->add('address', TextType::class)
             ->add('zip', TextType::class)
             ->add('city', TextType::class)
-            ->add('country', TextType::class)
-            ->add('organization', EntityType::class,[
-                'mapped'        => false,
-                'required'      => true,
-                'class'         => Organization::class,
-                'choice_label'  => 'organizationName',
-                'placeholder'   => 'Sélectionnez une entitée',
-                'constraints'   => [
-                    new NotBlank([
-                      'message' => 'Veuillez choisir une entitée parmis la liste proposée.',
-                    ])
-                  ]
-            ])
+            ->add('country', TextType::class);
+        if (isset($options['role_id']) && $options['role_id'] == 1) {
+            $builder
+                ->add('organization', EntityType::class,[
+                    'mapped'        => false,
+                    'required'      => true,
+                    'class'         => Organization::class,
+                    'choice_label'  => 'organizationName',
+                    'placeholder'   => 'Sélectionnez une entitée',
+                    'constraints'   => [
+                        new NotBlank([
+                          'message' => 'Veuillez choisir une entitée parmis la liste proposée.',
+                        ])
+                      ]
+                        ]);           
+        }
         ;
     }
 
@@ -44,6 +47,7 @@ class MoralFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => MoralCustomers::class,
+            'role_id'    => null,
         ]);
     }
 }

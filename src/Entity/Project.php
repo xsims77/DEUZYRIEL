@@ -51,7 +51,7 @@ class Project
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Donations::class)]
+    #[ORM\OneToMany(mappedBy: 'project', targetEntity: Donations::class, orphanRemoval: true)]
     private Collection $donations;
 
     public function __construct()

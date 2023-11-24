@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrganizationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,17 +43,20 @@ class Organization
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: Relation::class)]
+    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: Relation::class, orphanRemoval: true)]
     private Collection $relations;
 
-    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: PhysicalCustomers::class)]
+    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: PhysicalCustomers::class, orphanRemoval: true)]
     private Collection $physicalCustomers;
 
-    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: MoralCustomers::class)]
+    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: MoralCustomers::class, orphanRemoval: true)]
     private Collection $moralCustomers;
 
-    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: Project::class)]
+    #[ORM\OneToMany(mappedBy: 'organization', targetEntity: Project::class, orphanRemoval: true)]
     private Collection $projects;
+
+    #[ORM\Column(type: Types::SMALLINT)]
+    private int $isAdmin = 0;
 
     public function __construct()
     {
@@ -205,6 +209,18 @@ class Organization
                 $project->setOrganization(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsAdmin(): ?int
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(int $isAdmin): static
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }

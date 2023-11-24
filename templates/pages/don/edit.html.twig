@@ -33,11 +33,6 @@
                     <div class="row justify-content-center align-items-center">
                         <div class="col-md-6">
                             {{form_start(form)}}
-                                <div class="mb-3">
-                                    <label for="don_form_project">Choix du projet</label>
-                                    <div class="text-danger">{{form_errors(form.project)}}</div>
-                                    {{form_widget(form.project, {'attr':{'class':'form-control'}})}}
-                                </div>
                                 <div class="mb-3 input-container">
                                     <div class="text-danger">{{form_errors(form.donation_amount)}}</div>
                                     {{form_widget(form.donation_amount)}}

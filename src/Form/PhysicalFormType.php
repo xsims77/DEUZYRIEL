@@ -8,11 +8,13 @@ use App\Entity\PhysicalCustomers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+
+
 
 
 class PhysicalFormType extends AbstractType
@@ -38,12 +40,15 @@ class PhysicalFormType extends AbstractType
             ->add('city')
             ->add('country')
             ->add('isNPAI', ChoiceType::class, [
-                'placeholder'=> 'Choisissez entre oui ou non',
+                'placeholder'=> 'Choisissez si oui ou non',
                 'choices'  => [
                     'Oui' => true,
                     'Non' => false,
                 ],
-            ])
+                'required'  => true, //Ce champs est obligatoire
+            ]);
+        if (isset($options['role_id']) && $options['role_id'] == 1) {
+            $builder
             ->add('organization', EntityType::class,[
                 'mapped'        => false,
                 'required'      => true,
@@ -55,7 +60,8 @@ class PhysicalFormType extends AbstractType
                       'message' => 'Veuillez choisir une entitée parmis la liste proposée.',
                     ])
                   ]
-            ])
+                ]);
+            }
         ;
     }
 
@@ -63,6 +69,7 @@ class PhysicalFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PhysicalCustomers::class,
+            'role_id'   => null,
         ]);
     }
 }

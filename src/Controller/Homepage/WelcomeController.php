@@ -2,23 +2,18 @@
 
 namespace App\Controller\Homepage;
 
-
-use App\Repository\RelationRepository;
-use App\Repository\UsersRepository;
+use App\Template\TemplateManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class WelcomeController extends AbstractController
+class WelcomeController extends TemplateManager
 {
     #[Route('/', name: 'welcome.index')]
-    public function index(UsersRepository $user,RelationRepository $relationRepository): Response
-    {
-        $relations = $relationRepository->findAll();
+    public function index(Request $request): Response
+    {        
+        $relations = $request->getSession()->get('relations');
         // dd($relations);
-
-        return $this->render('pages/welcome/index.html.twig', [
-            'relations' => $relations
-        ]);
+        return $this->display($request, 'pages/welcome/index.html.twig', []);
     }
 }
