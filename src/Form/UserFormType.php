@@ -5,17 +5,18 @@ namespace App\Form;
 use App\Entity\Roles;
 use App\Entity\Users;
 use App\Entity\Organization;
+use App\Template\TemplateManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserFormType extends AbstractType
 {
@@ -32,7 +33,7 @@ class UserFormType extends AbstractType
                 'required' => true,
             ]);
 
-        if (isset($options['role_id']) && $options['role_id'] == 1) {
+        if (isset($options['role_name']) && TemplateManager::isRoleAdmin($options['role_name'])) {
         $builder
             ->add('organizationName', EntityType::class,[
                 'mapped'        => false,
@@ -71,7 +72,7 @@ class UserFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Users::class,
-            'role_id'  => null,
+            'role_name'  => null,
         ]);
     }
 }

@@ -14,7 +14,7 @@
                         <a class="nav-link active fs-4" aria-current="page" href="{{path('welcome.index')}}">Accueil</a>
                     </li>
                     {% if app.user %}
-                        {% if active_role <= 2 %}
+                        {% if is_admin or is_delegate %}
                              <li class="nav-item">
                                 <a class="nav-link fs-4" href="{{path('users.index')}}">Utilisateurs</a>
                             </li>

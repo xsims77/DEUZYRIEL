@@ -16,31 +16,32 @@ class ProfilController extends TemplateManager
     #[Route('/profil', name: 'profil.index', methods:["GET"])]
     public function index(Request $request) :Response
     {
+		// on vérifie si la session est toujours existante, sinon on déconnecte le user
+		$this->checkSession($request);
+		
         return $this->display($request, "pages/profil/profil.html.twig");
     }
-
-    
+	
     #[Route('/profil/edit', name: 'profil.edit', methods:['GET', 'PUT'])]
     public function profilEdit(Request $request, EntityManagerInterface $em) : Response
     {
-        $user = $this->getUser();
-        
-        $form = $this->createForm(ProfilFormType::class, $user, [
+		// on vérifie si la session est toujours existante, sinon on déconnecte le user
+		$this->checkSession($request);
+		
+        $userEntity = $this->getUser();
+        $form = $this->createForm(ProfilFormType::class, $userEntity, [
             "method"    => "PUT"
         ]);
-
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() ) 
-        {
-
-            $em->persist($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($userEntity);
             $em->flush();
-
             $this->addFlash("success", "Vos coordonnés ont bien été modifier");
             
             return $this->redirectToRoute('profil.index');
         }
+		
         return $this->display($request, 'pages/profil/edit.html.twig', [
             "profilForm"    => $form->createView()
         ]);
@@ -49,24 +50,23 @@ class ProfilController extends TemplateManager
     #[Route('/profil/edit_password', name: 'profil.edit_password', methods:['GET','PUT'])]
     public function editPassword(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em) : Response
     {
-        $user = $this->getUser();
-
+		// on vérifie si la session est toujours existante, sinon on déconnecte le user
+		$this->checkSession($request);
+		
+        $userEntity = $this->getUser();
         $form = $this->createForm(EditProfilPasswordFormType::class, null, [
             "method"    => "PUT"
         ]);
-
         $form->handleRequest($request);
    
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $request->request->all();
             $password = $data['edit_profil_password_form']['password']['first'];
-            $passwordHashed = $hasher->hashPassword($user, $password);
-            $user->setPassword($passwordHashed);
+            $passwordHashed = $hasher->hashPassword($userEntity, $password);
+            $userEntity->setPassword($passwordHashed);
 
-            $em->persist($user);
+            $em->persist($userEntity);
             $em->flush();
-
             $this->addFlash("success", "Votre nouveau mot de passe a bien été pris en compte");
 
             return $this->redirectToRoute('profil.index');

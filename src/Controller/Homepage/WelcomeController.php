@@ -11,9 +11,7 @@ class WelcomeController extends TemplateManager
 {
     #[Route('/', name: 'welcome.index')]
     public function index(Request $request): Response
-    {        
-        $relations = $request->getSession()->get('relations');
-        // dd($relations);
-        return $this->display($request, 'pages/welcome/index.html.twig', []);
+    {
+        return $this->display($request, 'pages/welcome/index.html.twig');
     }
 }

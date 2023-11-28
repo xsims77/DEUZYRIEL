@@ -42,7 +42,7 @@
         </div>
     {% endfor %}
 
-    {% if role[0].roleName == "ROLE_ADMIN" %}
+    {% if is_admin %}
       <div>
         <a href="{{path('project.create')}}" class="btn btn-secondary">Ajout d'un nouveau projet</a>
       </div>

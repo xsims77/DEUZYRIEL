@@ -9,9 +9,18 @@
         <div class="d-flex justify-content-center mt-5 align-items-center">
             <div class="cardChangeProfil">
                 <div class="bg text-center">
-                    <ul class="list-unstyled">
-                        <li>Nom de l'organisation: {{affichage.organizationName}}</li>
-                        <li>Role: {{affichage.roleName}}</li>
+                    <ul class="list-unstyled mt-3">
+                        <li><h3>Nom de l'organisation: </h3><br>{{affichage.organizationName}}</li>
+                        <hr>
+                        <li class="mt-4">
+                            <h3>Roles:</h3>
+                            <br> 
+                            {% if affichage.roleName == "ROLE_DELEGATE" %}
+                                Représentant
+                            {% elseif affichage.roleName == "ROLE_AGENT" %}
+                                Gestionnaire
+                            {% endif %}
+                        </li>
                     </ul>
                     {% if affichage.isActive == false %} 
                     <a href="{{path('change_profil.change',{'id':affichage.organizationId})}}" class="btn btn-success">Changer</a>

@@ -49,9 +49,11 @@
         </div>
     {% endfor %}
 
-    <div>
-        <a href="{{path('organization.create')}}" class="btn btn-secondary">Ajouter une nouvelle organisation</a>
-    </div>
+    {% if is_admin %}
+        <div>
+            <a href="{{path('organization.create')}}" class="btn btn-secondary">Ajouter une nouvelle organisation</a>
+        </div>
+    {% endif %}
         <div class="table-responsive my-5">
             <table id="myTable" class="table table-striped table-hover table-bordered">
                 <thead class="table-light">
@@ -72,12 +74,15 @@
                             <td>{{organization.updatedAt|date('d-m-Y')}}</td>
                             <td class="d-lg-flex justify-content-evenly">
                                 <a href="{{path('organization.edit', {'id': organization.id})}}" class="btn btn-success" type="button"><i class="fa-solid fa-pen-to-square m-2"></i></a>
-                                <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer l\'entité ?') && document.querySelector('#organization_delete_form_{{organization.id}}').submit()" title="Supprimer" href="#" 
-                                class="btn btn-danger" type="button"><i class="fa-solid fa-trash-can m-2"></i></a>
-                                <form method="POST" id="organization_delete_form_{{organization.id}}" action="{{path('organization.delete', {'id': organization.id})}}">
-                                    <input type="hidden" name="csrf_token" value="{{csrf_token('organization_delete_'~organization.id)}}">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                </form>
+
+                                {% if is_admin %}
+                                    <a onclick="event.preventDefault(); confirm('Êtes-vous sûr de vouloir supprimer l\'entité ?') && document.querySelector('#organization_delete_form_{{organization.id}}').submit()" title="Supprimer" href="#" 
+                                    class="btn btn-danger" type="button"><i class="fa-solid fa-trash-can m-2"></i></a>
+                                    <form method="POST" id="organization_delete_form_{{organization.id}}" action="{{path('organization.delete', {'id': organization.id})}}">
+                                        <input type="hidden" name="csrf_token" value="{{csrf_token('organization_delete_'~organization.id)}}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                    </form>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
